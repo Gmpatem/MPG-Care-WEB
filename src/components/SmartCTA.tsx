@@ -1,4 +1,4 @@
-﻿import { Link, useNavigate, useLocation } from 'react-router'
+﻿import { useNavigate, useLocation } from 'react-router'
 import { siteConfig } from '@/data/site-config'
 import { useRegion } from '@/lib/region'
 import { useContactModal } from './ContactModalProvider'
@@ -37,7 +37,7 @@ export function SmartCTA({
   const { region } = useRegion()
   const navigate = useNavigate()
   const location = useLocation()
-  const { openContactOptions, openLeadForm } = useContactModal()
+  const { openContactOptions } = useContactModal()
   const cfg = siteConfig.contact[region]
 
   const handleScroll = (e: React.MouseEvent) => {

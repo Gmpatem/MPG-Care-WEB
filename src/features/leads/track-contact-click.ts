@@ -26,7 +26,7 @@ export async function trackContactClick(input: ContactClickInput): Promise<void>
   if (!supabase) return
 
   try {
-    await supabase.from('website_leads').insert({
+    await (supabase.from('website_leads') as any).insert({
       full_name: '(Contact Click)',
       email: null,
       form_type: 'contact',

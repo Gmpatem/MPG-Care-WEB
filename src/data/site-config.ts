@@ -21,6 +21,7 @@ export const siteConfig: SiteConfig = {
     },
     CM: {
       primaryCTA: 'whatsapp',
+      bookingUrl: env.calendlyUrl,
       // Cameroon WhatsApp number is not yet available.
       // Falls back to email or PH WhatsApp when user tries to contact.
       whatsapp: env.whatsappCM ? `https://wa.me/${env.whatsappCM}` : '',

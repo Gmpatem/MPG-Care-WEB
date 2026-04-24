@@ -51,8 +51,8 @@ export async function submitLead(input: LeadInput): Promise<LeadResult> {
     language: typeof navigator !== 'undefined' ? navigator.language : null,
   }
 
-  const { data, error } = await supabase
-    .from('website_leads')
+  const { data, error } = await (supabase
+    .from('website_leads') as any)
     .insert({
       full_name: input.fullName.trim(),
       email: input.email?.trim().toLowerCase() || null,
@@ -78,7 +78,7 @@ export async function submitLead(input: LeadInput): Promise<LeadResult> {
       metadata,
     })
     .select('id')
-    .single()
+    .single() as any
 
   if (error) {
     console.error('[Leads] Insert error:', error)
