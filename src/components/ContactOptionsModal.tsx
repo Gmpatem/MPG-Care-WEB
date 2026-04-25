@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -6,28 +7,20 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog'
 import { useContactModal } from './ContactModalProvider'
+import { ProjectInquiryFormModal } from './ProjectInquiryFormModal'
 import { useRegion } from '@/lib/region'
 import { siteConfig } from '@/data/site-config'
 import { trackContactClickFireAndForget } from '@/features/leads/track-contact-click'
 import { Calendar, MessageCircle, Mail, Send, X } from 'lucide-react'
 
 export function ContactOptionsModal() {
-  const { isOptionsOpen, optionsModalOpts, closeContactOptions, openLeadForm } = useContactModal()
+  const { isOptionsOpen, optionsModalOpts, closeContactOptions } = useContactModal()
   const { region } = useRegion()
   const cfg = siteConfig.contact[region]
+  const [projectFormOpen, setProjectFormOpen] = useState(false)
 
   const hasWhatsApp = Boolean(cfg.whatsapp)
   const sourceCta = optionsModalOpts.sourceCta || 'contact-options-modal'
-
-  const handleOpenForm = () => {
-    closeContactOptions()
-    setTimeout(() => {
-      openLeadForm({
-        formType: 'project',
-        ...optionsModalOpts,
-      })
-    }, 200)
-  }
 
   const handleTrackAndClose = (channel: 'whatsapp' | 'email' | 'calendly') => {
     trackContactClickFireAndForget({
@@ -37,6 +30,19 @@ export function ContactOptionsModal() {
       serviceId: optionsModalOpts.service,
     })
     setTimeout(() => closeContactOptions(), 100)
+  }
+
+  const handleOpenProjectForm = () => {
+    trackContactClickFireAndForget({
+      channel: 'form',
+      sourceCta: 'fill_project_form',
+      region,
+      serviceId: optionsModalOpts.service,
+    })
+    closeContactOptions()
+    setTimeout(() => {
+      setProjectFormOpen(true)
+    }, 200)
   }
 
   const contactMethods = [
@@ -86,15 +92,7 @@ export function ContactOptionsModal() {
       href: '',
       external: false,
       visible: true,
-      onClick: () => {
-        trackContactClickFireAndForget({
-          channel: 'form',
-          sourceCta,
-          region,
-          serviceId: optionsModalOpts.service,
-        })
-        handleOpenForm()
-      },
+      onClick: handleOpenProjectForm,
     },
   ]
 
@@ -102,78 +100,88 @@ export function ContactOptionsModal() {
     'flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/[0.06]'
 
   return (
-    <Dialog open={isOptionsOpen} onOpenChange={(open) => !open && closeContactOptions()}>
-      <DialogContent
-        className="bg-navy-light border-white/[0.08] text-cream max-w-[420px] p-0 gap-0"
-        showCloseButton={false}
-      >
-        {/* Header */}
-        <div className="bg-navy-light border-b border-white/[0.08] px-6 py-4 flex items-center justify-between">
-          <DialogHeader className="text-left gap-1">
-            <DialogTitle className="font-space font-bold text-[18px] text-cream">
-              Choose how you want to contact us
-            </DialogTitle>
-            <DialogDescription className="font-sans text-[13px] text-slate">
-              Pick the option that works best for you.
-            </DialogDescription>
-          </DialogHeader>
-          <button
-            onClick={closeContactOptions}
-            className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors shrink-0"
-            aria-label="Close"
-          >
-            <X className="w-4 h-4 text-slate" />
-          </button>
-        </div>
+    <>
+      <Dialog open={isOptionsOpen} onOpenChange={(open) => !open && closeContactOptions()}>
+        <DialogContent
+          className="bg-navy-light border-white/[0.08] text-cream max-w-[420px] p-0 gap-0"
+          showCloseButton={false}
+        >
+          {/* Header */}
+          <div className="bg-navy-light border-b border-white/[0.08] px-6 py-4 flex items-center justify-between">
+            <DialogHeader className="text-left gap-1">
+              <DialogTitle className="font-space font-bold text-[18px] text-cream">
+                Choose how you want to contact us
+              </DialogTitle>
+              <DialogDescription className="font-sans text-[13px] text-slate">
+                Pick the option that works best for you.
+              </DialogDescription>
+            </DialogHeader>
+            <button
+              onClick={closeContactOptions}
+              className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors shrink-0"
+              aria-label="Close"
+            >
+              <X className="w-4 h-4 text-slate" />
+            </button>
+          </div>
 
-        {/* Options */}
-        <div className="px-4 py-4 flex flex-col gap-2">
-          {contactMethods
-            .filter((m) => m.visible)
-            .map((method) => {
-              const Icon = method.icon
-              const content = (
-                <>
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: 'rgba(255,107,53,0.1)' }}
-                  >
-                    <Icon className="w-5 h-5 text-orange" strokeWidth={1.5} />
-                  </div>
-                  <div className="flex flex-col text-left">
-                    <span className="font-sans font-semibold text-[15px] text-cream">
-                      {method.label}
-                    </span>
-                    <span className="font-sans font-normal text-[13px] text-slate">
-                      {method.description}
-                    </span>
-                  </div>
-                </>
-              )
-
-              if (method.onClick && !method.href) {
-                return (
-                  <button key={method.id} onClick={method.onClick} className={buttonBase}>
-                    {content}
-                  </button>
+          {/* Options */}
+          <div className="px-4 py-4 flex flex-col gap-2">
+            {contactMethods
+              .filter((m) => m.visible)
+              .map((method) => {
+                const Icon = method.icon
+                const content = (
+                  <>
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: 'rgba(255,107,53,0.1)' }}
+                    >
+                      <Icon className="w-5 h-5 text-orange" strokeWidth={1.5} />
+                    </div>
+                    <div className="flex flex-col text-left">
+                      <span className="font-sans font-semibold text-[15px] text-cream">
+                        {method.label}
+                      </span>
+                      <span className="font-sans font-normal text-[13px] text-slate">
+                        {method.description}
+                      </span>
+                    </div>
+                  </>
                 )
-              }
 
-              return (
-                <a
-                  key={method.id}
-                  href={method.href}
-                  target={method.external ? '_blank' : undefined}
-                  rel={method.external ? 'noopener noreferrer' : undefined}
-                  onClick={method.onClick}
-                  className={buttonBase}
-                >
-                  {content}
-                </a>
-              )
-            })}
-        </div>
-      </DialogContent>
-    </Dialog>
+                if (method.onClick && !method.href) {
+                  return (
+                    <button key={method.id} onClick={method.onClick} className={buttonBase}>
+                      {content}
+                    </button>
+                  )
+                }
+
+                return (
+                  <a
+                    key={method.id}
+                    href={method.href}
+                    target={method.external ? '_blank' : undefined}
+                    rel={method.external ? 'noopener noreferrer' : undefined}
+                    onClick={method.onClick}
+                    className={buttonBase}
+                  >
+                    {content}
+                  </a>
+                )
+              })}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <ProjectInquiryFormModal
+        open={projectFormOpen}
+        onOpenChange={setProjectFormOpen}
+        serviceSlug={optionsModalOpts.service}
+        sourcePage={typeof window !== 'undefined' ? window.location.pathname : '/'}
+        sourceCta={optionsModalOpts.sourceCta || 'fill_project_form'}
+      />
+    </>
   )
 }
