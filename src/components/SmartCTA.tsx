@@ -1,4 +1,4 @@
-﻿import { useNavigate, useLocation } from 'react-router'
+import { useNavigate, useLocation } from 'react-router'
 import { siteConfig } from '@/data/site-config'
 import { useRegion } from '@/lib/region'
 import { useContactModal } from './ContactModalProvider'
@@ -22,7 +22,7 @@ const variantStyles: Record<CTAVariant, string> = {
   secondary:
     'font-sans font-semibold text-[16px] bg-transparent border border-white/20 text-cream px-8 py-3.5 rounded-lg hover:border-orange hover:text-orange transition-all duration-200 inline-flex items-center justify-center',
   outline:
-    'font-sans font-medium text-[14px] bg-transparent border border-white/20 text-cream px-6 py-2.5 rounded-lg hover:border-orange hover:text-orange transition-all duration-200 inline-flex items-center justify-center',
+    'font-sans font-semibold text-[16px] bg-transparent border border-white/20 text-cream px-8 py-3.5 rounded-lg hover:border-orange hover:text-orange transition-all duration-200 inline-flex items-center justify-center',
   text: 'font-sans font-normal text-[16px] text-slate hover:text-cream underline-offset-4 hover:underline transition-colors inline-flex items-center justify-center',
 }
 
@@ -88,12 +88,15 @@ export function SmartCTA({
     )
   }
 
-  // WhatsApp -> direct link if available, otherwise options modal
+  // WhatsApp -> direct link with pre-filled message if available
   if (action === 'whatsapp') {
     if (cfg.whatsapp) {
+      const message = encodeURIComponent(
+        'Hello MPG Technologies, I saw your website and I am interested in your services. Can we discuss my project?'
+      )
       return (
         <a
-          href={cfg.whatsapp}
+          href={`https://wa.me/${cfg.whatsappNumber}?text=${message}`}
           target="_blank"
           rel="noopener noreferrer"
           onClick={onClick}

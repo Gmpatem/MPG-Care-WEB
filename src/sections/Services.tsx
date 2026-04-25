@@ -4,15 +4,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { services } from '@/data/services'
 import { getServiceIcon } from '@/components/ServiceIcon'
 import { useContactModal } from '@/components/ContactModalProvider'
-import { MessageSquare } from 'lucide-react'
-import { serviceLabelMap } from '@/data/contact'
+import { ArrowRight } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export function Services() {
   const sectionRef = useRef<HTMLElement>(null)
   const cardsRef = useRef<HTMLDivElement>(null)
-  const { openLeadForm } = useContactModal()
+  const { openContactOptions } = useContactModal()
 
   useEffect(() => {
     const section = sectionRef.current
@@ -54,7 +53,7 @@ export function Services() {
             What We Build
           </span>
           <h2 className="font-sans font-bold text-[36px] md:text-[48px] text-cream tracking-[-0.03em]">
-            Solutions That Generate Revenue
+            Services That Drive Results
           </h2>
         </div>
 
@@ -94,16 +93,15 @@ export function Services() {
 
                 <button
                   onClick={() =>
-                    openLeadForm({
-                      formType: 'service',
+                    openContactOptions({
+                      sourceCta: `services-request-${service.id}`,
                       service: service.id,
-                      sourceCta: `services-discuss-${service.id}`,
                     })
                   }
                   className="font-sans font-semibold text-[14px] bg-orange/10 text-orange px-5 py-2.5 rounded-lg hover:bg-orange hover:text-navy transition-all duration-200 inline-flex items-center justify-center gap-2 w-full"
                 >
-                  <MessageSquare className="w-4 h-4" />
-                  Discuss {serviceLabelMap[service.id] || service.title}
+                  <ArrowRight className="w-4 h-4" />
+                  Request this service
                 </button>
               </div>
             )

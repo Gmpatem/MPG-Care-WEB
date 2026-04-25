@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger)
 export function Projects() {
   const sectionRef = useRef<HTMLElement>(null)
   const cardsRef = useRef<HTMLDivElement>(null)
-  const { openLeadForm } = useContactModal()
+  const { openContactOptions } = useContactModal()
 
   useEffect(() => {
     const section = sectionRef.current
@@ -56,10 +56,10 @@ export function Projects() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
             <div>
               <h2 className="font-sans font-bold text-[36px] md:text-[48px] text-cream tracking-[-0.03em] mb-2">
-                Systems We've Engineered
+                Projects We Have Built
               </h2>
               <p className="font-sans font-normal text-[16px] text-slate">
-                Real businesses. Real results.
+                Real systems for real businesses. Case studies coming soon for live projects.
               </p>
             </div>
             <Link
@@ -93,6 +93,13 @@ export function Projects() {
                   loading="lazy"
                   className="w-full h-full object-cover opacity-90 hover:opacity-100 hover:scale-105 transition-all duration-500"
                 />
+                {!project.liveUrl && !project.githubUrl && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-navy/60">
+                    <span className="font-sans font-medium text-[13px] bg-navy-light/90 text-cream px-4 py-2 rounded-full border border-white/[0.08]">
+                      Case Study Coming Soon
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Content */}
@@ -136,8 +143,7 @@ export function Projects() {
                   ) : null}
                   <button
                     onClick={() =>
-                      openLeadForm({
-                        formType: 'project',
+                      openContactOptions({
                         sourceCta: `projects-similar-${project.id}`,
                       })
                     }

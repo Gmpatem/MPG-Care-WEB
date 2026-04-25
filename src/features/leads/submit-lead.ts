@@ -2,26 +2,26 @@ import { getSupabaseClient } from '@/lib/supabase'
 import { hasSupabaseConfig } from '@/lib/env'
 import type { LeadInput, LeadResult } from './types'
 
+function saveLeadToLocalStorage(input: LeadInput): LeadResult {
+  try {
+    const existing = JSON.parse(localStorage.getItem('mpg_leads') || '[]')
+    const leadRecord = {
+      id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      ...input,
+      submittedAt: new Date().toISOString(),
+      sourceUrl: typeof window !== 'undefined' ? window.location.href : null,
+    }
+    existing.push(leadRecord)
+    localStorage.setItem('mpg_leads', JSON.stringify(existing))
+    console.info('[Leads] Saved to localStorage. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to enable cloud storage.')
+    return { success: true, leadId: leadRecord.id }
+  } catch (err) {
+    console.error('[Leads] localStorage save error:', err)
+    return { success: false, error: 'Unable to save inquiry. Please contact us directly.' }
+  }
+}
+
 export async function submitLead(input: LeadInput): Promise<LeadResult> {
-  if (!hasSupabaseConfig()) {
-    console.warn(
-      '[Leads] Supabase env vars missing. Lead not saved.\n' +
-        'Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env.local'
-    )
-    return {
-      success: false,
-      error: 'Lead capture is not configured. Please contact support.',
-    }
-  }
-
-  const supabase = getSupabaseClient()
-  if (!supabase) {
-    return {
-      success: false,
-      error: 'Unable to initialize lead capture.',
-    }
-  }
-
   // Validate required fields based on form type
   if (!input.fullName?.trim()) {
     return { success: false, error: 'Full name is required.' }
@@ -41,6 +41,20 @@ export async function submitLead(input: LeadInput): Promise<LeadResult> {
 
   if (input.formType === 'service' && !input.businessProblem?.trim()) {
     return { success: false, error: 'Please describe your main business problem.' }
+  }
+
+  // If Supabase is not configured, fall back to localStorage
+  if (!hasSupabaseConfig()) {
+    console.warn(
+      '[Leads] Supabase env vars missing. Falling back to localStorage.\n' +
+        'Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env.local to enable cloud storage.'
+    )
+    return saveLeadToLocalStorage(input)
+  }
+
+  const supabase = getSupabaseClient()
+  if (!supabase) {
+    return saveLeadToLocalStorage(input)
   }
 
   const metadata: Record<string, unknown> = {
@@ -82,10 +96,7 @@ export async function submitLead(input: LeadInput): Promise<LeadResult> {
 
   if (error) {
     console.error('[Leads] Insert error:', error)
-    return {
-      success: false,
-      error: 'Failed to submit your inquiry. Please try again or contact us directly.',
-    }
+    return saveLeadToLocalStorage(input)
   }
 
   return {

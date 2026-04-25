@@ -39,21 +39,23 @@ export const preferredTimeOptions = [
 
 export const serviceOptions = [
   { value: '', label: 'Select a service' },
-  { value: 'web-development', label: 'Web Development' },
-  { value: 'systems-development', label: 'Systems Development' },
-  { value: 'mobile-web-apps', label: 'Mobile & Web Apps' },
-  { value: 'integrations-automation', label: 'Integrations & Automation' },
-  { value: 'business-tech-tools', label: 'Business Tech Tools' },
-  { value: 'digital-marketing', label: 'Digital Marketing & Conversion Setup' },
+  { value: 'websites-landing-pages', label: 'Websites & Landing Pages' },
+  { value: 'ecommerce-stores', label: 'E-commerce Stores' },
+  { value: 'business-systems', label: 'Business Systems' },
+  { value: 'mobile-apps', label: 'Mobile Apps' },
+  { value: 'automation-ai-tools', label: 'Automation & AI Tools' },
+  { value: 'digital-marketing-funnels', label: 'Digital Marketing Funnels' },
+  { value: 'tech-integration-consulting', label: 'Tech Integration & Consulting' },
   { value: 'other', label: 'Other / Not Sure' },
 ]
 
 export const serviceLabelMap: Record<string, string> = {
-  'web-development': 'Web Development',
-  'systems-development': 'Systems Development',
-  'mobile-web-apps': 'Mobile & Web Apps',
-  'integrations-automation': 'Integrations & Automation',
-  'business-tech-tools': 'Business Tech Tools',
-  'digital-marketing': 'Digital Marketing & Conversion Setup',
+  'websites-landing-pages': 'Websites & Landing Pages',
+  'ecommerce-stores': 'E-commerce Stores',
+  'business-systems': 'Business Systems',
+  'mobile-apps': 'Mobile Apps',
+  'automation-ai-tools': 'Automation & AI Tools',
+  'digital-marketing-funnels': 'Digital Marketing Funnels',
+  'tech-integration-consulting': 'Tech Integration & Consulting',
   'other': 'Other / Not Sure',
 }

@@ -27,6 +27,8 @@ import {
   Wrench,
   Target,
   Megaphone,
+  ShoppingCart,
+  Plug,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -59,6 +61,8 @@ const iconMap: Record<string, LucideIcon> = {
   Wrench,
   Target,
   Megaphone,
+  ShoppingCart,
+  Plug,
 }
 
 export function getServiceIcon(name: string): LucideIcon {

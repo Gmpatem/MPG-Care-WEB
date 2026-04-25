@@ -6,9 +6,9 @@ import { siteConfig } from '@/data/site-config'
 
 const navLinks = [
   { label: 'Services', href: '#services' },
+  { label: 'Packages', href: '#packages' },
   { label: 'Projects', href: '#projects' },
   { label: 'Process', href: '#process' },
-  { label: 'About', href: '#why-choose' },
 ]
 
 export function Navigation() {

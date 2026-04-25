@@ -2,9 +2,12 @@ import { Navigation } from '@/sections/Navigation'
 import { Footer } from '@/sections/Footer'
 import { projects } from '@/data/projects'
 import { Link } from 'react-router'
-import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Github, ArrowRight } from 'lucide-react'
+import { useContactModal } from '@/components/ContactModalProvider'
 
 export function Work() {
+  const { openContactOptions } = useContactModal()
+
   return (
     <div className="bg-navy min-h-[100dvh]">
       <Navigation />
@@ -23,10 +26,10 @@ export function Work() {
             Portfolio
           </span>
           <h1 className="font-space font-bold text-[36px] md:text-[48px] text-cream leading-[1.15] tracking-[-0.03em] mb-4">
-            Systems We've Engineered
+            Projects We Have Built
           </h1>
           <p className="font-sans font-normal text-[16px] text-slate leading-relaxed mb-12 max-w-[640px]">
-            Real businesses. Real results. Every project below was designed, built, and deployed by the MPG team.
+            Real systems for real businesses in the Philippines, Cameroon, and across Africa. Case studies and live demos coming soon.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -45,6 +48,13 @@ export function Work() {
                     loading="lazy"
                     className="w-full h-full object-cover opacity-90"
                   />
+                  {!project.liveUrl && !project.githubUrl && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-navy/60">
+                      <span className="font-sans font-medium text-[13px] bg-navy-light/90 text-cream px-4 py-2 rounded-full border border-white/[0.08]">
+                        Case Study Coming Soon
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <div className="p-7">
                   <div className="flex flex-wrap gap-2 mb-3">
@@ -86,6 +96,17 @@ export function Work() {
                         GitHub
                       </a>
                     ) : null}
+                    <button
+                      onClick={() =>
+                        openContactOptions({
+                          sourceCta: `work-page-similar-${project.id}`,
+                        })
+                      }
+                      className="font-sans font-medium text-[14px] text-orange hover:text-orange-light flex items-center gap-1.5 transition-colors"
+                    >
+                      <ArrowRight className="w-4 h-4" />
+                      Start Similar Project
+                    </button>
                   </div>
                 </div>
               </div>

@@ -1,66 +1,74 @@
-import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Code2, Smartphone, Zap, Target, MessageCircle, Workflow } from 'lucide-react'
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
 
-const metrics = [
-  { value: 40, suffix: '+', label: 'Systems Delivered', prefix: '' },
-  { value: 15, suffix: '+', label: 'Industries Served', prefix: '' },
-  { value: 99.9, suffix: '%', label: 'Uptime Guaranteed', prefix: '' },
-  { value: 24, suffix: 'h', label: 'Support Response', prefix: '<' },
-];
-
-function AnimatedNumber({ target, suffix, prefix, inView }: { target: number; suffix: string; prefix: string; inView: boolean }) {
-  const [display, setDisplay] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    const isFloat = target % 1 !== 0;
-    const duration = 2000;
-    const startTime = Date.now();
-    const startVal = 0;
-
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // ease out cubic
-      const current = startVal + (target - startVal) * eased;
-      setDisplay(isFloat ? parseFloat(current.toFixed(1)) : Math.floor(current));
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, [inView, target]);
-
-  return (
-    <span>
-      {prefix}{display}{suffix}
-    </span>
-  );
-}
+const trustBuilders = [
+  {
+    icon: Code2,
+    title: 'Built with Modern Tech',
+    desc: 'React, Node.js, and cloud infrastructure that scales with your business.',
+  },
+  {
+    icon: Smartphone,
+    title: 'Mobile-First Design',
+    desc: 'Every system works perfectly on phones because that is where your customers are.',
+  },
+  {
+    icon: Zap,
+    title: 'Fast Loading',
+    desc: 'Optimized for speed so visitors stay and search engines rank you higher.',
+  },
+  {
+    icon: Target,
+    title: 'Business-Focused Design',
+    desc: 'Every button, form, and page is designed to drive real business results.',
+  },
+  {
+    icon: MessageCircle,
+    title: 'WhatsApp-Ready Funnels',
+    desc: 'Direct WhatsApp integration so leads reach you instantly, not eventually.',
+  },
+  {
+    icon: Workflow,
+    title: 'Automation-Ready Systems',
+    desc: 'Built to connect with your existing tools and automate repetitive work.',
+  },
+]
 
 export function Trust() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null)
+  const cardsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+    const section = sectionRef.current
+    const cards = cardsRef.current
+    if (!section || !cards) return
 
+    const cardElements = cards.querySelectorAll('.trust-card')
     const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 70%',
-        onEnter: () => setInView(true),
-      });
-    }, section);
+      gsap.fromTo(
+        cardElements,
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 60%',
+            toggleActions: 'play none none none',
+          },
+        }
+      )
+    }, section)
 
-    return () => ctx.revert();
-  }, []);
+    return () => ctx.revert()
+  }, [])
 
   return (
     <section
@@ -69,27 +77,35 @@ export function Trust() {
       className="w-full bg-navy-light py-[120px] md:py-[120px]"
     >
       <div className="max-w-[1280px] mx-auto px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {metrics.map((metric) => (
-            <div
-              key={metric.label}
-              className="bg-navy/50 border border-white/[0.08] rounded-xl p-8 md:p-10 text-center"
-            >
-              <span className="font-space font-bold text-[40px] md:text-[56px] text-orange block mb-2">
-                <AnimatedNumber
-                  target={metric.value}
-                  suffix={metric.suffix}
-                  prefix={metric.prefix}
-                  inView={inView}
-                />
-              </span>
-              <span className="font-sans font-normal text-[12px] md:text-[14px] text-slate uppercase tracking-wider">
-                {metric.label}
-              </span>
-            </div>
-          ))}
+        <div className="text-center mb-16">
+          <span className="font-sans font-medium text-[12px] uppercase tracking-[0.12em] text-orange mb-4 block">
+            Why Trust MPG
+          </span>
+          <h2 className="font-sans font-bold text-[36px] md:text-[48px] text-cream tracking-[-0.03em]">
+            Built for Real Business Results
+          </h2>
+        </div>
+
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {trustBuilders.map((item) => {
+            const Icon = item.icon
+            return (
+              <div
+                key={item.title}
+                className="trust-card bg-navy/50 border border-white/[0.08] rounded-xl p-8 hover:border-orange/20 transition-colors duration-300"
+              >
+                <Icon className="w-7 h-7 text-orange mb-4" strokeWidth={1.5} />
+                <h3 className="font-sans font-semibold text-[18px] text-cream mb-2">
+                  {item.title}
+                </h3>
+                <p className="font-sans font-normal text-[15px] text-slate leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>
-  );
+  )
 }

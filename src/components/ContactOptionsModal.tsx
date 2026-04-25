@@ -44,7 +44,7 @@ export function ContactOptionsModal() {
       id: 'calendly',
       icon: Calendar,
       label: 'Book a Call',
-      description: 'Schedule a strategy call',
+      description: 'Schedule a free strategy call',
       href: cfg.bookingUrl,
       external: true,
       visible: true,
@@ -54,7 +54,7 @@ export function ContactOptionsModal() {
       id: 'whatsapp',
       icon: MessageCircle,
       label: 'Chat on WhatsApp',
-      description: 'Fastest way to reach me',
+      description: 'Fastest way to reach us',
       href: hasWhatsApp
         ? `${cfg.whatsapp}?text=${encodeURIComponent(
             'Hello MPG Technologies, I would like to discuss a project.\n\nService needed:\nBusiness name:\nBudget:\nTimeline:'
@@ -81,7 +81,7 @@ export function ContactOptionsModal() {
     {
       id: 'form',
       icon: Send,
-      label: 'Send Project Details',
+      label: 'Fill Project Form',
       description: 'Fill a short project inquiry form',
       href: '',
       external: false,
@@ -111,10 +111,10 @@ export function ContactOptionsModal() {
         <div className="bg-navy-light border-b border-white/[0.08] px-6 py-4 flex items-center justify-between">
           <DialogHeader className="text-left gap-1">
             <DialogTitle className="font-space font-bold text-[18px] text-cream">
-              Get In Touch
+              Choose how you want to contact us
             </DialogTitle>
             <DialogDescription className="font-sans text-[13px] text-slate">
-              Choose how you want to connect with us.
+              Pick the option that works best for you.
             </DialogDescription>
           </DialogHeader>
           <button

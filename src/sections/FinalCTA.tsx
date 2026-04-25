@@ -33,18 +33,21 @@ export function FinalCTA() {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-[700px]">
-        <h2 className="font-space font-bold text-[36px] md:text-[56px] text-cream leading-[1.1] tracking-[-0.04em] mb-6">
-          Ready to Turn Your Business Into a System?
+        <h2 className="font-space font-bold text-[32px] md:text-[52px] text-cream leading-[1.1] tracking-[-0.04em] mb-6">
+          Ready to turn your idea into a working business system?
         </h2>
         <p className="font-sans font-normal text-[16px] md:text-[18px] text-slate leading-relaxed max-w-[520px] mx-auto mb-10">
-          Book a free 30-minute strategy call. We'll map your current workflow and identify the first system to build.
+          Book a free call or send us a message. We will reply within 24 hours with a clear plan and next steps.
         </p>
-        <div className="flex flex-col items-center gap-4">
-          <SmartCTA action="book" variant="primary" className="!px-10 !py-4 !text-[16px] md:!text-[18px]">
-            Book Your Free Call
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <SmartCTA action="contact" variant="primary" className="!px-10 !py-4 !text-[16px] md:!text-[18px]">
+            Start Project
           </SmartCTA>
-          <SmartCTA action="contact" variant="text">
-            Start a Project
+          <SmartCTA action="book" variant="secondary" className="!px-10 !py-4 !text-[16px] md:!text-[18px]">
+            Book Free Call
+          </SmartCTA>
+          <SmartCTA action="whatsapp" variant="outline" className="!px-10 !py-4 !text-[16px] md:!text-[18px]">
+            WhatsApp Now
           </SmartCTA>
         </div>
       </div>

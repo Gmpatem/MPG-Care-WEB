@@ -1,9 +1,10 @@
 import { Link } from 'react-router'
 import { siteConfig } from '@/data/site-config'
 import { useContactModal } from '@/components/ContactModalProvider'
+import { Mail, Phone, Github } from 'lucide-react'
 
 export function Footer() {
-  const { company, social } = siteConfig
+  const { company } = siteConfig
   const { openContactOptions } = useContactModal()
 
   return (
@@ -35,32 +36,32 @@ export function Footer() {
             <ul className="flex flex-col gap-3">
               <li>
                 <Link to="/#services" className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200">
-                  Web Development
+                  Websites & Landing Pages
                 </Link>
               </li>
               <li>
                 <Link to="/#services" className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200">
-                  Systems Development
+                  E-commerce Stores
                 </Link>
               </li>
               <li>
                 <Link to="/#services" className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200">
-                  Mobile & Web Apps
+                  Business Systems
                 </Link>
               </li>
               <li>
                 <Link to="/#services" className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200">
-                  Integrations & Automation
+                  Mobile Apps
                 </Link>
               </li>
               <li>
                 <Link to="/#services" className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200">
-                  Business Tech Tools
+                  Automation & AI Tools
                 </Link>
               </li>
               <li>
                 <Link to="/#services" className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200">
-                  Conversion Setup
+                  Digital Marketing Funnels
                 </Link>
               </li>
             </ul>
@@ -73,7 +74,7 @@ export function Footer() {
             </h4>
             <ul className="flex flex-col gap-3">
               <li>
-                <Link to="/#why-choose" className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200">
+                <Link to="/#value" className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200">
                   About
                 </Link>
               </li>
@@ -101,53 +102,42 @@ export function Footer() {
           {/* Connect */}
           <div>
             <h4 className="font-sans font-semibold text-[14px] text-cream uppercase tracking-wider mb-4">
-              Connect
+              Contact
             </h4>
             <ul className="flex flex-col gap-3">
-              {social.linkedin ? (
+              <li>
+                <a
+                  href={`mailto:${company.email}`}
+                  className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200 inline-flex items-center gap-2"
+                >
+                  <Mail className="w-4 h-4" />
+                  {company.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={siteConfig.contact.PH.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200 inline-flex items-center gap-2"
+                >
+                  <Phone className="w-4 h-4" />
+                  +63 999 446 2191
+                </a>
+              </li>
+              {siteConfig.social.github ? (
                 <li>
                   <a
-                    href={social.linkedin}
+                    href={siteConfig.social.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200"
+                    className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200 inline-flex items-center gap-2"
                   >
-                    LinkedIn
-                  </a>
-                </li>
-              ) : null}
-              {social.github ? (
-                <li>
-                  <a
-                    href={social.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200"
-                  >
+                    <Github className="w-4 h-4" />
                     GitHub
                   </a>
                 </li>
               ) : null}
-              {social.twitter ? (
-                <li>
-                  <a
-                    href={social.twitter}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200"
-                  >
-                    Twitter
-                  </a>
-                </li>
-              ) : null}
-              <li>
-                <a
-                  href={`mailto:${company.email}`}
-                  className="font-sans font-normal text-[14px] text-slate hover:text-cream transition-colors duration-200"
-                >
-                  Email
-                </a>
-              </li>
             </ul>
           </div>
         </div>

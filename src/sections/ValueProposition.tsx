@@ -64,7 +64,7 @@ export function ValueProposition() {
               Still Running Your Business on Spreadsheets?
             </h2>
             <p className="font-sans font-normal text-[18px] text-slate leading-relaxed max-w-[420px]">
-              Most businesses lose 10+ hours weekly to manual data entry, missed bookings, and fragmented tools.
+              Manual data entry, missed bookings, and fragmented tools slow down growth and waste time you could spend serving customers.
             </p>
           </div>
 
@@ -89,9 +89,17 @@ export function ValueProposition() {
               <span className="font-sans font-medium text-[12px] uppercase tracking-[0.12em] text-teal mb-4 block">
                 The MPG Solution
               </span>
-              <h3 className="font-sans font-bold text-[30px] md:text-[36px] text-cream mb-8">
+              <h3 className="font-sans font-bold text-[30px] md:text-[36px] text-cream mb-6">
                 One System. Zero Manual Work.
               </h3>
+              <div className="mb-8">
+                <a
+                  href="#services"
+                  className="font-sans font-semibold text-[14px] bg-orange/10 text-orange px-6 py-3 rounded-lg hover:bg-orange hover:text-navy transition-all duration-200 inline-flex items-center gap-2"
+                >
+                  See How We Can Help
+                </a>
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {solutions.map((item) => (
                   <div

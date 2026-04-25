@@ -5,12 +5,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const processSteps = [
-  { num: '01', title: 'Discovery', desc: 'We learn your business, your pain points, and your goals in depth.' },
-  { num: '02', title: 'Strategy', desc: 'We design the system architecture and integration plan.' },
-  { num: '03', title: 'Design', desc: 'We craft the user experience and visual interface.' },
-  { num: '04', title: 'Build', desc: 'We develop with clean code, testing, and documentation.' },
-  { num: '05', title: 'Launch', desc: 'We deploy, migrate data, and train your team.' },
-  { num: '06', title: 'Support', desc: 'We monitor, maintain, and continuously improve the system.' },
+  { num: '01', title: 'Discover', desc: 'We learn your business, goals, and what slows you down every day.' },
+  { num: '02', title: 'Design', desc: 'We plan the system, interface, and experience before writing any code.' },
+  { num: '03', title: 'Build', desc: 'We develop your solution with clean, modern code and real-world testing.' },
+  { num: '04', title: 'Connect Tools', desc: 'We integrate WhatsApp, payments, forms, and automations so everything talks.' },
+  { num: '05', title: 'Launch', desc: 'We deploy, test, and train your team so the system works from day one.' },
+  { num: '06', title: 'Improve', desc: 'We monitor, maintain, and refine based on real usage and your feedback.' },
 ];
 
 export function Process() {
@@ -53,7 +53,7 @@ export function Process() {
             How We Work
           </span>
           <h2 className="font-sans font-bold text-[36px] md:text-[48px] text-cream tracking-[-0.03em]">
-            From Idea to System
+            Simple Process, Real Results
           </h2>
         </div>
 

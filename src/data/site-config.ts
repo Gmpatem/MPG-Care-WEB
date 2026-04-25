@@ -6,7 +6,7 @@ export const siteConfig: SiteConfig = {
     name: 'MPG Technologies',
     shortName: 'MPG',
     tagline:
-      'Business systems and automation partner for companies that want to scale without the manual work.',
+      'We build websites, systems, and automations that help small businesses get more customers and run smoother.',
     email: env.publicEmail,
     year: 2025,
   },
@@ -22,17 +22,13 @@ export const siteConfig: SiteConfig = {
     CM: {
       primaryCTA: 'whatsapp',
       bookingUrl: env.calendlyUrl,
-      // Cameroon WhatsApp number is not yet available.
-      // Falls back to email or PH WhatsApp when user tries to contact.
-      whatsapp: env.whatsappCM ? `https://wa.me/${env.whatsappCM}` : '',
-      whatsappNumber: env.whatsappCM,
+      whatsapp: env.whatsappCM ? `https://wa.me/${env.whatsappCM}` : `https://wa.me/${env.whatsappPH}`,
+      whatsappNumber: env.whatsappCM || env.whatsappPH,
       fallback: 'form',
       currency: 'XAF',
     },
   },
   social: {
-    linkedin: '',
-    github: '',
-    twitter: '',
+    github: 'https://github.com/Gmpatem',
   },
 }
